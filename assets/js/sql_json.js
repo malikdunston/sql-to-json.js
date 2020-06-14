@@ -1,4 +1,5 @@
 let service = {
+	source: data,
 	databases: [
 		{
 			title: "orgs",
@@ -11,28 +12,16 @@ let service = {
 			title: "campuses",
 			tables: [
 				["buildings", "building_id"],
-				["floors", "floor_id"],
-				["rooms", "room_id"]
+				// ["floors", "floor_id"],
+				// ["rooms", "room_id"]
 			]
 		},
 	],
-	selectTables(arr = []){
-		return arr.flat();
-	},
 	allRows(selected, arr = []){
-		if(!selected){
-			selected = this.selectTables(
-				[
-					["campuses", "campus_id"]
-				]
-			);
-			console.log("requesting", selected);
-		}
-		selected.forEach(function(level){
-			arr.push(data[level[0]]);
+		selected.forEach(function(table){
+			arr.push(service.source[table[0]]);
 		});
 		return arr.flat();
-	// }
 	},
 	getJSON(order, allRows, n = 0, d = 1, node = {}) {
 		if (!order) {
@@ -47,10 +36,7 @@ let service = {
 			});
 		}
 		return thisTable
-	},
-
+	}
 };
-
 window.sql_json = service;
-
 const sql_json = window.sql_json;
