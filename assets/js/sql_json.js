@@ -16,6 +16,14 @@ let service = {
 				// ["rooms", "room_id"]
 			]
 		},
+		{
+			title: "buildings",
+			tables: [
+				// ["buildings", "building_id"],
+				["floors", "floor_id"],
+				["rooms", "room_id"]
+			]
+		},
 	],
 	allRows(selected, arr = []){
 		selected.forEach(function(table){

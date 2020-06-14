@@ -22,8 +22,8 @@ let searchByDb = (term, arr = []) => {
 		}
 
 		sql.data = sql_json.allRows(sql.structure)
-		// sql.data = [];
 
+		// sql.data = [];
 		// sql.structure
 		// .forEach(function(database){
 		// 	sql.data.push(sql_json.databases[term]);
