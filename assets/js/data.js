@@ -116,17 +116,5 @@ let data = {
 			name_long: "Kitchen",
 			chocolate: 1
 		},
-	],
-	sql_to_json: {
-		stuff: 7,
-		newStuff(){
-			console.log(this.stuff);	
-		},
-		tables(selectedTables, arr = []){
-			selectedTables.forEach(function(level){
-				arr.push(data[level[0]]);
-			});
-			return arr.flat();
-		}
-	}
+	]
 }

@@ -1,43 +1,57 @@
-// sql-to-json -- data conversion service
 
-	let otherOrder = [
-		["institutions", "institution_id"],
-		["campuses", "campus_id"]
-	];
+// let x = [
+// 	sql_json.databases[0].tables, 
+// 	sql_json.databases[1].tables
+// ];
 
-	let order = [
-		["institutions", "institution_id"],
-		["campuses", "campus_id"],
-		["buildings", "building_id"],
-		["floors", "floor_id"],
-		["rooms", "room_id"]
-	];
+let searchByDataBase = (term, arr = []) => {
+	let databases = sql_json.databases.filter(
+		db => db.title == term
+	);
+	databases.forEach(
+		database => arr.push(database.tables)
+	);
+	return arr
+}
 
-	let tables = data.sql_to_json.tables(order);
-	console.log(tables);
 
-	let getData = (n = 0, d = 1, node = {}) => {
-		let thisTable = tables.filter(rowObj => rowObj.table == order[n][0]);
-		if (n == order.length - d) {
-		} else {
-			thisTable.forEach(function(thisRow){
-				thisRow[order[n + 1][0]] = getData(n + 1, d, thisRow
-				).filter(rowObj => rowObj[order[n][1]] == thisRow[order[n][1]]);
-			});
-		}
-		return thisTable
-	};
+let getSql = (x) => {
+	let sql = {
+		structure: sql_json.selectTables(x),
+		data: sql_json.allRows(sql_json.selectTables(x))
+	}
+	return sql
+}
 
-// index.js -- build the view
-
-	const model = getData();
+let inject = (sql) => {
+	const model = sql_json.getJSON(sql.structure, sql.data);
 	const view = document.querySelector(".json pre");
 	const viewModel = JSON.stringify(model, null, 3);
-
 	view.innerHTML = viewModel;
+};
 
 
-	let model2 = getData(1, 1);
-	console.dir(tables, data);
 
-	console.dir(model2);
+
+// index stuff
+
+
+
+// let run = (settings) => {
+
+
+	inject(getSql(searchByDataBase("campuses")));
+	// inject(getSql(searchByDataBase("orgs")));
+
+
+// }
+
+// run(x);
+
+// ideal use:
+
+// run(
+// 	{
+
+// 	}
+// );
